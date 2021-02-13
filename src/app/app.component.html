@@ -1,13 +1,45 @@
 <h1>Users: <b>{{users.length}}</b></h1>
 
-<div class='user' *ngFor="let user of users">
-  <div class="id" [ngClass]="{'male': user.gender === 'M', 'female': user.gender === 'F'}">{{user.id}}</div>
+<form (submit)="formSubmit(f)"
+      #f="ngForm">
+
+  <small *ngIf="nameInputRef.errors?.required">I campo è obbligatorio.</small>
+  <small *ngIf="nameInputRef.errors?.minLength">I campo è troppo corto.</small>
+
+  <input type="text"
+         name="name"
+         [style.border]="nameInputRef.invalid && f.dirty ? '1px dashed red' : null"
+         #nameInputRef="ngModel"
+         ngModel
+         minlength="3"
+         required
+         placeholder="name">
+  <br>
+  <select ngModel
+          required
+          name="gender">
+    <option value="">Select gender</option>
+    <option value="F">Female</option>
+    <option value="M">Male</option>
+  </select>
+  <br><br>
+  <small *ngIf="f.invalid && f.touched">Il form non è valido.</small>
+  <button type="submit"
+          [disabled]="f.invalid">Add</button>
+</form>
+
+<div class='user'
+     *ngFor="let user of users; let i = index">
+  <div class="id"
+       [ngClass]="{'male': user.gender === 'M', 'female': user.gender === 'F'}">{{user.id}}</div>
   <b class="name">
-    {{user.name}}
+    {{i + 1}}) {{user.name}}
   </b>
   <div>Age: <b>{{user.age}}</b></div>
   <div>Gender: <b>{{user.gender === 'M' ? 'Male' : 'Female'}}</b></div>
   <div>City: <b>{{user.city}}</b></div>
   <div>Birthday: <b>{{user.birthday | date: 'dd-MM-yyyy'}}</b></div>
   <div>Bitcoins: <b>{{user.bitcoins | number: '1.2-4'}}</b></div>
+
+  <button (click)="delete(user.id)">Delete</button>
 </div>

@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { NgForm } from '@angular/forms';
 import { User } from './model/user';
 @Component({
   selector: 'app-root',
@@ -50,5 +51,17 @@ export class AppComponent {
         bitcoins: 3.7483918
       }
     ];
+  }
+
+  formSubmit(form: NgForm): void {
+    const user = {
+      ...form.value,
+      id: Date.now()
+    };
+    this.users.unshift(user);
+  }
+
+  delete(userId: number): void {
+    this.users = this.users.filter(user => user.id !== userId);
   }
 }
