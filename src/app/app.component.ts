@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { User } from './model/user';
+import { HttpClient } from '@angular/common/http'
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -8,60 +9,66 @@ import { User } from './model/user';
 })
 
 export class AppComponent {
-
   public users: User[];
+  public selectedUser: User;
+  public error: boolean;
 
-  constructor() {
+  constructor(private http: HttpClient) {
+    this.http.get<User[]>('http://localhost:3000/users')
+      .subscribe(res => {
+        this.users = res;
+      })
+  }
 
-    this.users = [
-      {
-        id: 1,
-        name: 'Giulia',
-        age: 16,
-        gender: 'F',
-        city: 'Rome',
-        birthday: 1611955740000,
-        bitcoins: 3.7483918
-      },
-      {
-        id: 2,
-        name: 'Fabio',
-        age: 50,
-        gender: 'M',
-        city: 'Rome',
-        birthday: 1611955740000,
-        bitcoins: 3.7483918
-      },
-      {
-        id: 3,
-        name: 'Marco',
-        age: 24,
-        gender: 'M',
-        city: 'Rome',
-        birthday: 1611955740000,
-        bitcoins: 3.7483918
-      },
-      {
-        id: 4,
-        name: 'Mirko',
-        age: 22,
-        gender: 'M',
-        city: 'Rome',
-        birthday: 1611955740000,
-        bitcoins: 3.7483918
-      }
-    ];
+  selectUser(user: User): void {
+    if (this.selectedUser && this.selectedUser.id === user.id) {
+      this.selectedUser = null;
+    } else {
+      this.selectedUser = user;
+    }
   }
 
   formSubmit(form: NgForm): void {
-    const user = {
-      ...form.value,
-      id: Date.now()
-    };
-    this.users.unshift(user);
+    if (this.selectedUser?.id) {
+      this.edit(form);
+    } else {
+      this.add(form);
+    }
+  }
+
+  add(form: NgForm): void {
+    this.http.post<User>(`http://localhost:3000/users`, form.value)
+      .subscribe(res => {
+        this.users.unshift(res);
+        form.reset();
+      })
+  }
+
+  edit(form: NgForm): void {
+    this.error = false;
+
+    this.http.patch<User>(`http://localhost:3000/users/${this.selectedUser.id}`, form.value)
+      .subscribe(
+
+        // esempio di next
+        (res) => {
+          this.users = this.users.map(u => {
+            return u.id === this.selectedUser.id ? res : u
+          })
+        },
+
+        // esempio di errore
+        (error) => {
+          this.error = true;
+        }
+
+      )
   }
 
   delete(userId: number): void {
-    this.users = this.users.filter(user => user.id !== userId);
+    this.http.delete(`http://localhost:3000/users/${userId}`)
+      .subscribe(() => {
+        this.users = this.users.filter(user => user.id !== userId);
+      })
   }
 }

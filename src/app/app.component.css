@@ -4,6 +4,11 @@
   padding: 10px;
   margin-top: 5px;
   position: relative;
+  transition: all 0.2s;
+}
+
+.user.selected{
+  background: gainsboro;
 }
 
 .id {
@@ -42,3 +47,26 @@
 img {
   width: 100%
 }
+
+input {
+  width: 100%;
+  margin-bottom: 5px;
+  max-width: 200px;
+}
+
+.container {
+  padding: 20px;
+}
+
+#deleteButton {
+  margin-top: 5px;
+}
+
+form{
+  margin-bottom: 20px;
+}
+
+.pointable{
+  cursor: pointer;
+}
+

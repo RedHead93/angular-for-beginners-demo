@@ -1,0 +1,24 @@
+{
+  "users": [
+    {
+      "name": "Giulio",
+      "gender": "M",
+      "id": 2,
+      "age": 17,
+      "city": "Trieste"
+    },
+    {
+      "name": "Fabio",
+      "gender": "F",
+      "id": 3
+    },
+    {
+      "name": "Anita",
+      "gender": "F",
+      "id": 4
+    }
+  ],
+  "login": {
+    "username": "Giulia"
+  }
+}
