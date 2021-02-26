@@ -1,0 +1,9 @@
+<div *ngIf="user">
+  <h1>{{user.name}}</h1>
+
+  <div>Age: <b>{{user.age || '-'}}</b></div>
+  <div>Gender: <b>{{user.gender || '-'}}</b></div>
+  <div>City: <b>{{user.city || '-'}}</b></div>
+  <div>Birthday: <b>{{user.birthday || '-'}}</b></div>
+  <div>Bitcoins: <b>{{user.bitcoins || '-'}}</b></div>
+</div>
