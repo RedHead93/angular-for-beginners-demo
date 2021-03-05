@@ -3,3 +3,26 @@
 *{
     font-family: sans-serif
 }
+
+.link, .button{
+  margin-right: 5px;
+  background: gainsboro;
+  border-radius: 4px;
+  padding: 5px 15px;
+  color: black;
+  text-transform: uppercase;
+  font-size: 80%;
+  display: inline-block;
+  text-decoration: none;
+  transition: all 0.2s;
+  border: 0;
+}
+
+.link:hover, .button:hover{
+  background: pink;
+  opacity: 0.5;
+}
+
+.link.active{
+  background: pink;
+}

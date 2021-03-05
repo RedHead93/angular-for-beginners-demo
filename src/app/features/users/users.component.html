@@ -1,10 +1,10 @@
 <div class="container">
 
-  <h1>Users: <b>{{users?.length || '-'}}</b></h1>
+  <h1>Users: <b>{{usersService.users?.length || '-'}}</b></h1>
 
-  <pre *ngIf="error">Errore</pre>
+  <pre *ngIf="usersService.error">Errore</pre>
 
-  <form (submit)="formSubmit(f)"
+  <form (submit)="usersService.formSubmit(f)"
         #f="ngForm">
 
     <!-- <small *ngIf="nameInputRef.errors?.required">I campo è obbligatorio.</small>
@@ -14,12 +14,12 @@
            name="name"
            [style.border]="nameInputRef.invalid && f.dirty ? '1px dashed red' : null"
            #nameInputRef="ngModel"
-           [ngModel]="selectedUser?.name"
+           [ngModel]="usersService.selectedUser?.name"
            minlength="3"
            required
            placeholder="name">
     <br>
-    <select [ngModel]="selectedUser?.gender"
+    <select [ngModel]="usersService.selectedUser?.gender"
             required
             name="gender">
       <option value="">Select gender</option>
@@ -32,14 +32,14 @@
             class="button"
             id="addButton"
             [disabled]="f.invalid">
-      {{selectedUser?.id ? 'Edit' : 'Add'}}
+      {{usersService.selectedUser?.id ? 'Edit' : 'Add'}}
     </button>
   </form>
 
   <div class='user pointable'
-       *ngFor="let user of users; let i = index"
-       [ngClass]="{'selected': user.id === selectedUser?.id}"
-       (click)="selectUser(user)">
+       *ngFor="let user of usersService.users; let i = index"
+       [ngClass]="{'selected': user.id === usersService.selectedUser?.id}"
+       (click)="usersService.selectUser(user)">
     <div class="id"
          [ngClass]="{'male': user.gender === 'M', 'female': user.gender === 'F'}">{{user.id}}</div>
     <b class="name">
@@ -48,11 +48,11 @@
     <div>Gender: <b>{{user.gender === 'M' ? 'Male' : 'Female'}}</b></div>
 
     <button class="button"
-            (click)="delete(user.id)">
+            (click)="usersService.delete(user.id)">
       Delete
     </button>
     <button class="button"
-            (click)="openDetail(user.id)">
+            (click)="usersService.openDetail(user.id)">
       Vai al dettaglio
     </button>
   </div>

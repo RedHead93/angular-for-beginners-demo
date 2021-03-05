@@ -1,0 +1,14 @@
+.navbar-container{
+  background: whitesmoke;
+  width: 100%;
+  padding: 20px;
+}
+
+.navbar-container.light{
+  background: whitesmoke;
+}
+
+.navbar-container.dark{
+  background: rgb(66, 66, 66);
+}
+
